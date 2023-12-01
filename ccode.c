@@ -109,6 +109,31 @@ void updatemeaning(){
 }
 
 //function to delete a given word
+void deleteword() {
+    char wordtodel[50];
+    int j;
+    int p = 0;
+    
+    printf("Enter the word that has to be deleted:\n");
+    scanf("%s", wordtodel);
+
+    for (int i = 0; i < num; i++) {
+        if (strcmp(d[i].word, wordtodel) == 0) {
+            for (j = i; j < num - 1; j++) {
+                strcpy(d[j].word, d[j + 1].word);
+                strcpy(d[j].meaning, d[j + 1].meaning);
+            }
+            p = 1;
+            printf("Entered word has been deleted from the dictionary\n");
+            num--;  // Decrement the number of words after deletion
+            break;
+        }
+    }
+
+    if (p == 0) {
+        printf("Sorry, no such word found!\n");
+    }
+}
 
 
 
@@ -126,6 +151,7 @@ int main() {
         printf("Enter 4 to view all words from the dictionary\n");
         printf("Enter 5 to find meaning of a word\n");
         printf("Enter 6 to update meaning of a given word\n");
+        printf("Enter 7 to delete elements from the dictionary\n");
         printf("Enter choice: ");
         scanf("%d", &choice);  
 
@@ -147,6 +173,9 @@ int main() {
         }
         else if (choice==6){
             updatemeaning();
+        }
+        else if (choice==7){
+            deleteword();
         }
         else{
             break;
