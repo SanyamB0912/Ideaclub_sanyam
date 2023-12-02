@@ -1,27 +1,39 @@
-#include<stdio.h>
-#include<string.h>  
-#include<ctype.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
 
 struct dictionary {
-    char word[50];  
-    char meaning[100];  
+    char word[50];
+    char meaning[100];
 };
 
-//global declarations
-struct dictionary d[100];
-int num = 0; 
-int i;// variable for loop
+// Global declarations
+struct dictionary *d = NULL; // Declare d as a pointer
+int num = 0;
+int i; // Variable for loop
 
+// Function to add words and meanings into the dictionary
+void addintodict() {
+    struct dictionary *temp = realloc(d, (num + 1) * sizeof(struct dictionary));
 
+    if (temp == NULL) {
+        printf("Memory allocation error\n");
+        exit(EXIT_FAILURE);
+    }
 
-//to add words and meanings into the dictionary
-void addintodict(){
+    d = temp;
+
+    // Now you can add the new entry to the dictionary
     printf("Enter the word:\n");
     scanf("%s", d[num].word);
     printf("Enter the meaning:\n ");
     scanf("%s", d[num].meaning);
     printf("Added word into the dictionary\n");
+
+    num++;
 }
+
 // to display entire set of words and meanings from the dictionary
 void displaydict(){
     
@@ -113,19 +125,19 @@ void deleteword() {
     char wordtodel[50];
     int j;
     int p = 0;
-    
+
     printf("Enter the word that has to be deleted:\n");
     scanf("%s", wordtodel);
 
     for (int i = 0; i < num; i++) {
         if (strcmp(d[i].word, wordtodel) == 0) {
+            
             for (j = i; j < num - 1; j++) {
-                strcpy(d[j].word, d[j + 1].word);
-                strcpy(d[j].meaning, d[j + 1].meaning);
+                d[j] = d[j + 1];
             }
-            p = 1;
+            
             printf("Entered word has been deleted from the dictionary\n");
-            num--;  // Decrement the number of words after deletion
+            p = 1;num--;
             break;
         }
     }
@@ -134,6 +146,7 @@ void deleteword() {
         printf("Sorry, no such word found!\n");
     }
 }
+
 
 
 
