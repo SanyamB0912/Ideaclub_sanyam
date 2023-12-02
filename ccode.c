@@ -4,25 +4,25 @@
 #include <stdlib.h>
 
 struct dictionary {
-    char word[50];
-    char meaning[100];
+    char word[50];  //stores the word
+    char meaning[100]; //stores the meaning
 };
 
 // Global declarations
-struct dictionary *d = NULL; // Declare d as a pointer
-int num = 0;
+struct dictionary *d = NULL; // global declaration of the structure as pointer
+int num = 0;      //counts the number of words in the dictionary
 int i; // Variable for loop
 
 // Function to add words and meanings into the dictionary
 void addintodict() {
-    struct dictionary *temp = realloc(d, (num + 1) * sizeof(struct dictionary));
+    struct dictionary *temp = realloc(d, (num + 1) * sizeof(struct dictionary)); //adding values into the dict
 
-    if (temp == NULL) {
+    if (temp == NULL) { // if memory allocation fails
         printf("Memory allocation error\n");
         exit(EXIT_FAILURE);
     }
 
-    d = temp;
+    d = temp;  //assignment 
 
     // Now you can add the new entry to the dictionary
     printf("Enter the word:\n");
