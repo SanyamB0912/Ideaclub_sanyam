@@ -4,32 +4,57 @@
 #include <stdlib.h>
 
 struct dictionary {
-    char word[50];  //stores the word
-    char meaning[100]; //stores the meaning
+    char word[50];  // stores the word
+    char meaning[100]; // stores the meaning
 };
 
 // Global declarations
-struct dictionary *d = NULL; // global declaration of the structure as pointer
-int num = 0;      //counts the number of words in the dictionary
+struct dictionary *d = NULL; // global declaration of the structure as a pointer
+int num = 0;      // counts the number of words in the dictionary
 int i; // Variable for loop
+
+// Function to compare two words for qsort
+int compareWords(const void *a, const void *b) {
+    return strcmp(((struct dictionary*)a)->word, ((struct dictionary*)b)->word);
+}
 
 // Function to add words and meanings into the dictionary
 void addintodict() {
-    struct dictionary *temp = realloc(d, (num + 1) * sizeof(struct dictionary)); //adding values into the dict
+    struct dictionary *temp = realloc(d, (num + 1) * sizeof(struct dictionary)); // adding values into the dict
 
     if (temp == NULL) { // if memory allocation fails
         printf("Memory allocation error\n");
         exit(EXIT_FAILURE);
     }
 
-    d = temp;  //assignment 
-
+    d = temp;  // assignment
+    char wordintodict[50];char meaningofword[100];
     // Now you can add the new entry to the dictionary
     printf("Enter the word:\n");
-    scanf("%s", d[num].word);
-    printf("Enter the meaning:\n ");
-    scanf("%s", d[num].meaning);
+    
+    scanf("%s", wordintodict);
+    for(i=0;i<strlen(wordintodict);i++){
+        if (i==0){
+            d[num].word[i]=toupper(wordintodict[0]);
+        }
+        else{
+            d[num].word[i]=tolower(wordintodict[i]);
+        }
+    }
+    printf("Enter the meaning:\n");
+    scanf("%s", meaningofword);
+    for(i=0;i<strlen(meaningofword);i++){
+        if (i==0){
+           d[num].meaning[i]=toupper(meaningofword[0]);
+        }
+        else{
+            d[num].meaning[i]=tolower(meaningofword[i]);
+        }
+    }
     printf("Added word into the dictionary\n");
+
+    // Sort the dictionary to maintain the order
+    qsort(d, num + 1, sizeof(struct dictionary), compareWords);
 
     num++;
 }
@@ -94,8 +119,18 @@ void dispmeaning(){
     printf("Please enter the word whose meaning to be found:\n");
     int p=0;
     scanf("%s",wordtofind);
+    char lowerwordtofind[50];char wordindict[50];
+    for (i=0;i<strlen(wordtofind);i++){
+        lowerwordtofind[i]=tolower(wordtofind[i]);
+    }
+    lowerwordtofind[strlen(wordtofind)] = '\0';
     for (i=0;i<num;i++){
-        if (strcmp(tolower(d[i].word),tolower(wordtofind))==0){
+       
+        for (int j=0;j<strlen(d[i].word);j++){
+            wordindict[j]=tolower((d[i].word)[j]);
+        }
+         wordindict[strlen(d[i].word)] = '\0';
+        if (strcmp(wordindict,lowerwordtofind)==0){
             printf("Meaning:");printf("%s",d[i].meaning);printf("\n");
             p=1;
         }
