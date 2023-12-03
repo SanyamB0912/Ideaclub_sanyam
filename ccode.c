@@ -45,7 +45,7 @@ void displaydict(){
     printf("WORD\t\tMEANING\n");
     for (i=0;i<num;i++){
         printf("%s",d[i].word);printf("\t\t\t");
-        printf("%s",d[i].meaning);printf("\n\n");}
+        printf("%s",d[i].meaning);printf("\n");}
     }
 }
 
@@ -56,10 +56,11 @@ void displaywithstartchar(){
     scanf(" %c",&firstchr);printf("\n");
     printf("WORD\t\tMEANING\n");
     for (i=0;i<num;i++){
-        if (((d[i].word)[0])==firstchr){
+        if ((tolower((d[i].word)[0]))==firstchr || (toupper((d[i].word)[0])==firstchr)){
              printf("%s",d[i].word);printf("\t\t\t");
-            printf("%s",d[i].meaning);printf("\n\n");
-            num++;
+            printf("%s",d[i].meaning);printf("\n");
+            
+            count++;
             
         }
     }
@@ -91,11 +92,16 @@ void dispwords(){
 void dispmeaning(){
     char wordtofind[50];
     printf("Please enter the word whose meaning to be found:\n");
+    int p=0;
     scanf("%s",wordtofind);
     for (i=0;i<num;i++){
-        if (strcmp(d[i].word,wordtofind)==0){
+        if (strcmp(tolower(d[i].word),tolower(wordtofind))==0){
             printf("Meaning:");printf("%s",d[i].meaning);printf("\n");
+            p=1;
         }
+    }
+    if (p==0){
+        printf("NO such word found!\n");
     }
     
 }
@@ -106,6 +112,7 @@ void updatemeaning(){
     int p=0;
     printf("Please enter the word whose meaning has to be changed:\n");
     scanf("%s",wordtoupdate);
+    
     for (i=0;i<num;i++){
         if (strcmp(d[i].word,wordtoupdate)==0){
             printf("Enter new meaning:\n");
