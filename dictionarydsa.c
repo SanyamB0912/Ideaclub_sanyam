@@ -18,6 +18,16 @@ int compareWords(const void *a, const void *b) {
     return strcmp(((struct dictionary*)a)->word, ((struct dictionary*)b)->word);
 }
 
+int isAlphabetic(const char *str) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (!isalpha(str[i])) {
+            return 0;  // return 0 if the word is not alphabetic
+        }
+    }
+    return 1;  // returns 1 if the code is alphabetic
+}
+
+
 // Function to add words and meanings into the dictionary
 void addintodict() {
     struct dictionary *temp = realloc(d, (num + 1) * sizeof(struct dictionary));
@@ -33,12 +43,21 @@ void addintodict() {
     char meaningofword[200];
 
     // Now you can add the new entry to the dictionary
-    printf("Enter the word:\n");
+    while (1) {
+        printf("Enter the word:\n");
 
-    // Read the word and consume the newline character
-    scanf(" %[^\n]s", wordintodict);
+        // Read the word and consume the newline character
+        scanf(" %[^\n]s", wordintodict);
 
-    for (i = 0; i < strlen(wordintodict); i++) {
+        // Check if the input word is alphabetic
+        if (isAlphabetic(wordintodict)) {
+            break;
+        } else {
+            char confirm;
+            printf("The input word is not alphabetic. Do you want to proceed? (Y/N): \n");
+            scanf(" %c", &confirm);
+            if (confirm == 'Y' || confirm == 'y') {
+                 for (i = 0; i < strlen(wordintodict); i++) {
         if (i == 0) {
             d[num].word[i] = toupper(wordintodict[0]);
         } else {
@@ -63,6 +82,15 @@ void addintodict() {
     }
 
     printf("Added word into the dictionary\n");
+                break;
+            } else {
+                printf("Please enter the word again!\n");
+                break;
+            }
+        }
+    }
+
+   
 
     qsort(d, num + 1, sizeof(struct dictionary), compareWords);
 
