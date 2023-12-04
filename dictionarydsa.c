@@ -148,24 +148,26 @@ void dispmeaning(){
 }
 
 //function to update meaning
-void updatemeaning(){
+void updatemeaning() {
     char wordtoupdate[50];
-    int p=0;
+    int p = 0;
+    int i;
+
     printf("Please enter the word whose meaning has to be changed:\n");
-    scanf("%s",wordtoupdate);
-    wordtoupdate[0]=toupper(wordtoupdate[0]);
-    
-    
-    for (i=0;i<num;i++){
-        if (strcmp(d[i].word,wordtoupdate)==0){
+    scanf(" %[^\n]", wordtoupdate);
+    wordtoupdate[0] = toupper(wordtoupdate[0]);
+
+    for (i = 0; i < num; i++) {
+        if (strcmp(d[i].word, wordtoupdate) == 0) {
             printf("Enter new meaning:\n");
-            scanf("%s",&d[i].meaning);
+            scanf(" %[^\n]", d[i].meaning);
             printf("Meaning updated\n");
-            p=1;
+            p = 1;
             break;
         }
     }
-    if (p==0){
+
+    if (p == 0) {
         printf("NO SUCH WORD FOUND!\n");
     }
 }
