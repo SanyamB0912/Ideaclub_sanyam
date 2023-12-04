@@ -4,18 +4,18 @@
 #include <stdlib.h>
 
 struct dictionary {
-    char word[50];  // stores the word
-    char meaning[100]; // stores the meaning
+    char word[50];    // stores the word
+    char meaning[200]; // stores the meaning
 };
 
 // Global declarations
 struct dictionary *d = NULL; // global declaration of the structure as a pointer
-int num = 0;      // counts the number of words in the dictionary
-int i; // Variable for loop
+int num = 0;                 // counts the number of words in the dictionary
+int i;                       // Variable for loop
 
 // Function to compare two words for qsort
 int compareWords(const void *a, const void *b) {
-    return strcmp(((struct dictionary*)a)->word, ((struct dictionary*)b)->word);
+    return strcmp(((struct dictionary *)a)->word, ((struct dictionary *)b)->word);
 }
 
 // Function to add words and meanings into the dictionary
@@ -27,28 +27,31 @@ void addintodict() {
         exit(EXIT_FAILURE);
     }
 
-    d = temp;  // assignment
-    char wordintodict[50];char meaningofword[100];
+    d = temp; // assignment
+    char wordintodict[50];
+    char meaningofword[200];
     // Now you can add the new entry to the dictionary
     printf("Enter the word:\n");
-    
-    scanf("%s", wordintodict);
-    for(i=0;i<strlen(wordintodict);i++){
-        if (i==0){
-            d[num].word[i]=toupper(wordintodict[0]);
-        }
-        else{
-            d[num].word[i]=tolower(wordintodict[i]);
+
+    fgets(wordintodict, sizeof(wordintodict), stdin);
+    wordintodict[strcspn(wordintodict, "\n")] = '\0'; // Remove newline character
+
+    for (i = 0; i < strlen(wordintodict); i++) {
+        if (i == 0) {
+            d[num].word[i] = toupper(wordintodict[0]);
+        } else {
+            d[num].word[i] = tolower(wordintodict[i]);
         }
     }
     printf("Enter the meaning:\n");
-    scanf("%s", meaningofword);
-    for(i=0;i<strlen(meaningofword);i++){
-        if (i==0){
-           d[num].meaning[i]=toupper(meaningofword[0]);
-        }
-        else{
-            d[num].meaning[i]=tolower(meaningofword[i]);
+    fgets(meaningofword, sizeof(meaningofword), stdin);
+    meaningofword[strcspn(meaningofword, "\n")] = '\0'; // Remove newline character
+
+    for (i = 0; i < strlen(meaningofword); i++) {
+        if (i == 0) {
+            d[num].meaning[i] = toupper(meaningofword[0]);
+        } else {
+            d[num].meaning[i] = tolower(meaningofword[i]);
         }
     }
     printf("Added word into the dictionary\n");
