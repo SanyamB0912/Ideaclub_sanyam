@@ -51,14 +51,14 @@ void addintodict() {
 
         // Check if the input word is alphabetic
         if (isAlphabetic(wordintodict)) {
-             for (i = 0; i < strlen(wordintodict); i++) {
+            for (i = 0; i < strlen(wordintodict); i++) {
         if (i == 0) {
             d[num].word[i] = toupper(wordintodict[0]);
         } else {
             d[num].word[i] = tolower(wordintodict[i]);
         }
     }
-             printf("Enter the meaning:\n");
+    printf("Enter the meaning:\n");
 
     // Read the meaning and consume the newline character
     scanf(" %[^\n]s", meaningofword);
@@ -72,6 +72,7 @@ void addintodict() {
     }
 
     printf("Added word into the dictionary\n");
+    
             break;
         } else {
             char confirm;
@@ -104,8 +105,7 @@ void addintodict() {
 
     printf("Added word into the dictionary\n");
                 break;
-            } 
-            else {
+            } else {
                 printf("Please enter the word again!\n");
                 break;
             }
