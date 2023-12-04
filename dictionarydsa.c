@@ -142,7 +142,7 @@ void dispmeaning(){
         }
     }
     if (p==0){
-        printf("NO such word found!\n");
+        printf("No such word found!\n");
     }
     
 }
